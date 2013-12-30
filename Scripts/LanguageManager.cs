@@ -1,27 +1,8 @@
 //
 //  LanguageManager.cs
 //
-// The MIT License (MIT)
-//
-// Copyright (c) 2013 Niklas Borglund
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// Copyright (c) 2013 Niklas Borglund. All rights reserved.
+// @NiklasBorglund
 
 using UnityEngine;
 using System.Collections;
@@ -37,6 +18,177 @@ public delegate void ChangeLanguageEventHandler(LanguageManager thisLanguage);
 
 public class LanguageManager : MonoBehaviour
 {
+	#region internalCultureDic
+	static Dictionary<string,string> internalCultureDictionary = new Dictionary<string, string>(){
+		{"Arabic","ar"},
+		{"Bulgarian","bg"},
+		{"Catalan","ca"},
+		{"Chinese","zh-CHS"},
+		{"Czech","cs"},
+		{"Danish","da"},
+		{"German","de"},
+		{"Greek","el"},
+		{"English","en"},
+		{"Spanish","es"},
+		{"Finnish","fi"},
+		{"French","fr"},
+		{"Hebrew","he"},
+		{"Hungarian","hu"},
+		{"Icelandic","is"},
+		{"Italian","it"},
+		{"Japanese","ja"},
+		{"Korean","ko"},
+		{"Dutch","nl"},
+		{"Norwegian","no"},
+		{"Polish","pl"},
+		{"Portuguese","pt"},
+		{"Romanian","ro"},
+		{"Russian","ru"},
+		{"Croatian","hr"},
+		{"Slovak","sk"},
+		{"Albanian","sq"},
+		{"Swedish","sv"},
+		{"Thai","th"},
+		{"Turkish","tr"},
+		{"Indonesian","id"},
+		{"Ukrainian","uk"},
+		{"Belarusian","be"},
+		{"Slovenian","sl"},
+		{"Estonian","et"},
+		{"Latvian","lv"},
+		{"Lithuanian","lt"},
+		{"Persian","fa"},
+		{"Vietnamese","vi"},
+		{"Armenian","hy"},
+		{"Basque","eu"},
+		{"Macedonian","mk"},
+		{"Afrikaans","af"},
+		{"Georgian","ka"},
+		{"Faroese","fo"},
+		{"Hindi","hi"},
+		{"Swahili","sw"},
+		{"Gujarati","gu"},
+		{"Tamil","ta"},
+		{"Telugu","te"},
+		{"Kannada","kn"},
+		{"Marathi","mr"},
+		{"Gallegan","gl"},
+		{"Konkani","kok"},
+		{"Arabic (Saudi Arabia)","ar-SA"},
+		{"Bulgarian (Bulgaria)","bg-BG"},
+		{"Catalan (Spain)","ca-ES"},
+		{"Chinese (Taiwan)","zh-TW"},
+		{"Czech (Czech Republic)","cs-CZ"},
+		{"Danish (Denmark)","da-DK"},
+		{"German (Germany)","de-DE"},
+		{"Greek (Greece)","el-GR"},
+		{"English (United States)","en-US"},
+		{"Finnish (Finland)","fi-FI"},
+		{"French (France)","fr-FR"},
+		{"Hebrew (Israel)","he-IL"},
+		{"Hungarian (Hungary)","hu-HU"},
+		{"Icelandic (Iceland)","is-IS"},
+		{"Italian (Italy)","it-IT"},
+		{"Japanese (Japan)","ja-JP"},
+		{"Korean (South Korea)","ko-KR"},
+		{"Dutch (Netherlands)","nl-NL"},
+		{"Norwegian Bokmål (Norway)","nb-NO"},
+		{"Polish (Poland)","pl-PL"},
+		{"Portuguese (Brazil)","pt-BR"},
+		{"Romanian (Romania)","ro-RO"},
+		{"Russian (Russia)","ru-RU"},
+		{"Croatian (Croatia)","hr-HR"},
+		{"Slovak (Slovakia)","sk-SK"},
+		{"Albanian (Albania)","sq-AL"},
+		{"Swedish (Sweden)","sv-SE"},
+		{"Thai (Thailand)","th-TH"},
+		{"Turkish (Turkey)","tr-TR"},
+		{"Indonesian (Indonesia)","id-ID"},
+		{"Ukrainian (Ukraine)","uk-UA"},
+		{"Belarusian (Belarus)","be-BY"},
+		{"Slovenian (Slovenia)","sl-SI"},
+		{"Estonian (Estonia)","et-EE"},
+		{"Latvian (Latvia)","lv-LV"},
+		{"Lithuanian (Lithuania)","lt-LT"},
+		{"Persian (Iran)","fa-IR"},
+		{"Vietnamese (Vietnam)","vi-VN"},
+		{"Armenian (Armenia)","hy-AM"},
+		{"Basque (Spain)","eu-ES"},
+		{"Macedonian (Macedonia)","mk-MK"},
+		{"Afrikaans (South Africa)","af-ZA"},
+		{"Georgian (Georgia)","ka-GE"},
+		{"Faroese (Faroe Islands)","fo-FO"},
+		{"Hindi (India)","hi-IN"},
+		{"Swahili (Kenya)","sw-KE"},
+		{"Gujarati (India)","gu-IN"},
+		{"Tamil (India)","ta-IN"},
+		{"Telugu (India)","te-IN"},
+		{"Kannada (India)","kn-IN"},
+		{"Marathi (India)","mr-IN"},
+		{"Gallegan (Spain)","gl-ES"},
+		{"Konkani (India)","kok-IN"},
+		{"Arabic (Iraq)","ar-IQ"},
+		{"Chinese (China)","zh-CN"},
+		{"German (Switzerland)","de-CH"},
+		{"English (United Kingdom)","en-GB"},
+		{"Spanish (Mexico)","es-MX"},
+		{"French (Belgium)","fr-BE"},
+		{"Italian (Switzerland)","it-CH"},
+		{"Dutch (Belgium)","nl-BE"},
+		{"Norwegian Nynorsk (Norway)","nn-NO"},
+		{"Portuguese (Portugal)","pt-PT"},
+		{"Swedish (Finland)","sv-FI"},
+		{"Arabic (Egypt)","ar-EG"},
+		{"Chinese (Hong Kong S.A.R., China)","zh-HK"},
+		{"German (Austria)","de-AT"},
+		{"English (Australia)","en-AU"},
+		{"Spanish (Spain)","es-ES"},
+		{"French (Canada)","fr-CA"},
+		{"Arabic (Libya)","ar-LY"},
+		{"Chinese (Singapore)","zh-SG"},
+		{"German (Luxembourg)","de-LU"},
+		{"English (Canada)","en-CA"},
+		{"Spanish (Guatemala)","es-GT"},
+		{"French (Switzerland)","fr-CH"},
+		{"Arabic (Algeria)","ar-DZ"},
+		{"Chinese (Macao S.A.R. China)","zh-MO"},
+		{"English (New Zealand)","en-NZ"},
+		{"Spanish (Costa Rica)","es-CR"},
+		{"French (Luxembourg)","fr-LU"},
+		{"Arabic (Morocco)","ar-MA"},
+		{"English (Ireland)","en-IE"},
+		{"Spanish (Panama)","es-PA"},
+		{"Arabic (Tunisia)","ar-TN"},
+		{"English (South Africa)","en-ZA"},
+		{"Spanish (Dominican Republic)","es-DO"},
+		{"Arabic (Oman)","ar-OM"},
+		{"Spanish (Venezuela)","es-VE"},
+		{"Arabic (Yemen)","ar-YE"},
+		{"Spanish (Colombia)","es-CO"},
+		{"Arabic (Syria)","ar-SY"},
+		{"Spanish (Peru)","es-PE"},
+		{"Arabic (Jordan)","ar-JO"},
+		{"English (Trinidad and Tobago)","en-TT"},
+		{"Spanish (Argentina)","es-AR"},
+		{"Arabic (Lebanon)","ar-LB"},
+		{"English (Zimbabwe)","en-ZW"},
+		{"Spanish (Ecuador)","es-EC"},
+		{"Arabic (Kuwait)","ar-KW"},
+		{"English (Philippines)","en-PH"},
+		{"Spanish (Chile)","es-CL"},
+		{"Arabic (United Arab Emirates)","ar-AE"},
+		{"Spanish (Uruguay)","es-UY"},
+		{"Arabic (Bahrain)","ar-BH"},
+		{"Spanish (Paraguay)","es-PY"},
+		{"Arabic (Qatar)","ar-QA"},
+		{"Spanish (Bolivia)","es-BO"},
+		{"Spanish (El Salvador)","es-SV"},
+		{"Spanish (Honduras)","es-HN"},
+		{"Spanish (Nicaragua)","es-NI"},
+		{"Spanish (Puerto Rico)","es-PR"}
+	};
+	#endregion
+
     #region Singleton
     private static LanguageManager instance = null;
     public static LanguageManager Instance
@@ -227,6 +379,7 @@ public class LanguageManager : MonoBehaviour
         //add the header to the document
         xmlDocument = xmlHeader + xmlDocument;
 
+		#if !UNITY_METRO 
         //Create the xml file with the new reduced resx document
         XmlReader reader = XmlReader.Create(new StringReader(xmlDocument));
 
@@ -235,6 +388,12 @@ public class LanguageManager : MonoBehaviour
         
         //done
         reader.Close();
+		#else
+		using (XmlReader reader = XmlReader.Create(new StringReader(xmlDocument))){
+			ReadElements(reader);
+
+		}
+		#endif
         initialized = true;
     }
 	/// <summary>
@@ -251,10 +410,11 @@ public class LanguageManager : MonoBehaviour
             {
                 case XmlNodeType.Element:
                     //If this is a chunk of data, then parse it
-                    if (reader.Name == "data")
+				if (reader.Name == "data")
                     {
-                        ReadData(reader);
-                    }
+					ReadData(reader);
+						
+				}
                     break;
             }
         }
@@ -269,7 +429,7 @@ public class LanguageManager : MonoBehaviour
     {
         //If these values are not being set,
         //something is wrong.
-        string key = "ERROR";
+		string key = "ERROR";
 
         string value = "ERROR";
 
@@ -282,20 +442,23 @@ public class LanguageManager : MonoBehaviour
                     key = reader.Value;
                 }
             }
-        }
+		}
 
         //Move back to the element
         reader.MoveToElement();
-
-        //Read the child nodes
+		//Read the child nodes
         if (reader.ReadToDescendant("value"))
         {
             do
             {
-                value = reader.ReadString();
-            }
+				//value = reader.ReadString();
+				value = reader.ReadElementContentAsString();
+				if (reader.Name.Equals("data")){
+					break;
+				}
+			}
             while (reader.ReadToNextSibling("value"));
-        }
+			}
 
         //Add the raw values to the dictionary
         textDataBase.Add(key, value);
@@ -328,7 +491,7 @@ public class LanguageManager : MonoBehaviour
 					string thisLanguageName = languageFile.name.Substring(languageStart.Length);
 					availableLanguages.Add(thisLanguageName);
 #if !UNITY_WP8
-					availableLanguagesCultureInfo.Add(CultureInfo.GetCultureInfo(thisLanguageName));
+					availableLanguagesCultureInfo.Add(new CultureInfo(thisLanguageName));
 #endif
 				}
 			}
@@ -534,24 +697,24 @@ public class LanguageManager : MonoBehaviour
 			Debug.LogWarning("LanguageManager.cs: The system language of this application is Unknown");
 			return "Unknown";
 		}
-
+		
 		string systemLanguage = Application.systemLanguage.ToString();
-#if !UNITY_WP8
+		#if (!UNITY_WINRT && !UNITY_METRO && !UNITY_WP8)
 		CultureInfo[] cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
 		foreach(CultureInfo info in cultureInfos)
 		{
 			if(info.EnglishName == systemLanguage)
 			{
-				return info.Name;
+				return info.Name;	
 			}
 		}
-
+		#endif
+		if (internalCultureDictionary.ContainsKey (systemLanguage)) {
+			return internalCultureDictionary[systemLanguage];
+		}
+		
 		Debug.LogError("LanguageManager.cs: A system language of this application is could not be found!");
 		return "System Language not found!";
-#else
-		Debug.LogError("LanguageManager.cs: GetSystemLanguage() Feature is not currently available in Smart Localization for Windows Phone 8");
-		return defaultLanguage;
-#endif
 	}
 	/// <summary>
 	/// Gets the culture info of the specified string
@@ -559,6 +722,6 @@ public class LanguageManager : MonoBehaviour
 	/// </summary>
 	public CultureInfo GetCultureInfo(string languageName)
 	{
-		return CultureInfo.GetCultureInfo(languageName);
+		return new CultureInfo(languageName);
 	}
 }
