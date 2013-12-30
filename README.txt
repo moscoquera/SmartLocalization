@@ -1,3 +1,9 @@
+Forked from: https://github.com/NiklasBorglund/SmartLocalization
+
+My Changes:
+ - Support for Windows Store
+
+
 Smart Localization by Niklas Borglund - niklasborglund[at]gmail[dot]com, @NiklasBorglund
 ---------------------------------------
 Localizing your game has never been this easy. Localize your game with only a few mouse clicks.
