@@ -3,6 +3,8 @@
 //
 // Copyright (c) 2013 Niklas Borglund. All rights reserved.
 // @NiklasBorglund
+//
+// Modified by: @moscoquera
 
 using UnityEngine;
 using System.Collections;
